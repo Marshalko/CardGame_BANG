@@ -131,24 +131,29 @@ public class Game {
         // prison check
 
         //playing card
-        while (true) {
+        while (playedCard != 420) {
             boolean validInput = false;
-
-            player.displayCardsOnHand();
-            System.out.println("420: nezahraj nic");
-
-            System.out.println("||||||     Ktoru kartu chces zahrat              ||||||");
-            playedCard = myObj.nextInt();
-            if (playedCard == 420) break;
-
-
-            //card action
-            player.getCardsOnHand().get(playedCard - 1).action(player, deckOfTrash, listOfPlayers, deckOfCards);
+            while (!validInput) {
+                player.displayCardsOnHand();
+                System.out.println("420: nezahraj nic");
+                System.out.println("||||||     Ktoru kartu chces zahrat ?            ||||||");
+                String userInput = scanner.nextLine();
+                try {
+                    playedCard = Integer.parseInt(userInput);
+                    if (playedCard > 0 && playedCard <= player.getCardsOnHand().size()) {
+                        player.getCardsOnHand().get(playedCard - 1).action(player, deckOfTrash, listOfPlayers, deckOfCards);
+                        validInput = true;
+                    }
+                    if (playedCard == 420) break;
+                    else if (playedCard > player.getCardsOnHand().size() || playedCard <= 0)
+                        System.out.println("???????         Zadaj cislo karty more...        ??????");
+                } catch (NumberFormatException e) {
+                    System.out.println("???????         Zadaj cislo karty more7...        ??????");
+                }
+                System.out.println(" ");
+            }
         }
-
-
         //removing excessive cards
-
         while (player.getCardsOnHand().size() > player.getLives()) {
             boolean validInput = false;
             while (!validInput) {
@@ -161,7 +166,6 @@ public class Game {
                     if (temp >= 1 && temp <= player.getCardsOnHand().size()) {
                         player.cardRemove(temp, deckOfTrash);
                         validInput = true;
-
                     } else {
                         System.out.println("??????? Musis zadat cislo karty ktoru vlastnis... ?????????");
                     }
@@ -197,11 +201,9 @@ public class Game {
                 playHand(listOfPlayers.get(turnID));
                 System.out.println("------               Tah skoncil.                ------");
             }
-
             survivors = checkDeaths(survivors);
         }
         System.out.println("========             HRA SKONCILA             =========");
-
     }
 }
 
@@ -210,3 +212,5 @@ public class Game {
 // vstup osetrit pre hrane karty
 // ak dojde deckOfCArds neh prehodi trashDeck do deckOfCards osetrit aj pre dostavnik
 // instance of overit ci pojde dopici
+// unused code
+

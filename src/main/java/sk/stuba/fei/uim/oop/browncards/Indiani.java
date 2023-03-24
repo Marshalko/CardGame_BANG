@@ -2,9 +2,7 @@ package sk.stuba.fei.uim.oop.browncards;
 
 import sk.stuba.fei.uim.oop.Card;
 import sk.stuba.fei.uim.oop.Player;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Indiani extends BrownCards {
     public Indiani() {
@@ -14,26 +12,23 @@ public class Indiani extends BrownCards {
     @Override
     public void action(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers, ArrayList<Card> deckOfCards) {
         super.action(player, deckOfTrash, listOfPlayers, deckOfCards);
-        boolean hasBang = false;
-        for (int i = 0; i < listOfPlayers.size(); i++) {
-           hasBang = false;
-            if (listOfPlayers.get(i).getID() != player.getID()) {
-                for (int j = 0; j < listOfPlayers.get(i).getCardsOnHand().size(); j++) {
-                    if (!hasBang && Objects.equals(listOfPlayers.get(i).getCardsOnHand().get(j).getName(), "BANG")) {
+        boolean hasBang ;
+        for (Player listOfPlayer : listOfPlayers) {
+            hasBang = false;
+            if (listOfPlayer.getID() != player.getID()) {
+                for (int j = 0; j < listOfPlayer.getCardsOnHand().size(); j++) {
+                    if (!hasBang && listOfPlayer.getCardsOnHand().get(j) instanceof Bang) {
                         hasBang = true;
-                        System.out.println(listOfPlayers.get(i).getName() + " pouzil BANG a nestratil zivot");
-                        deckOfTrash.add(listOfPlayers.get(i).getCardsOnHand().get(j));
-                        listOfPlayers.get(i).getCardsOnHand().remove(j);
+                        System.out.println(listOfPlayer.getName() + " pouzil BANG a nestratil zivot");
+                        deckOfTrash.add(listOfPlayer.getCardsOnHand().get(j));
+                        listOfPlayer.getCardsOnHand().remove(j);
                     }
                 }
                 if (!hasBang) {
-                    listOfPlayers.get(i).takeLife(1);
+                    listOfPlayer.takeLife(1);
                 }
-
             }
         }
-
-
         player.removeCardFromHand(this);
         deckOfTrash.add(this);
     }

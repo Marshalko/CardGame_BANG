@@ -1,6 +1,7 @@
 package sk.stuba.fei.uim.oop;
 
 import sk.stuba.fei.uim.oop.bluecards.BlueCards;
+import sk.stuba.fei.uim.oop.bluecards.Dynamite;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -98,7 +99,7 @@ public class Player {
     public BlueCards hasDynamite() {
         boolean hasDynamite = false;
         for (int i = 0; i < this.getCardsOnBoard().size(); i++) {
-            if (Objects.equals(this.getCardsOnBoard().get(i).getName(), "DYNAMITE"))
+            if (this.getCardsOnBoard().get(i) instanceof Dynamite)
                 return this.getCardsOnBoard().get(i);
         }
         return null;

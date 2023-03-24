@@ -14,13 +14,11 @@ public class Dostavnik extends BrownCards {
     @Override
     public void action(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers, ArrayList<Card> deckOfCards) {
         for (int i = 0; i < 2; i++) {
-            //dorobit ak je deck prazdny
 
             if (deckOfCards.isEmpty()) {
                 deckOfCards.addAll(deckOfTrash);
                 Collections.shuffle(deckOfCards);
             }
-
             player.addCardToHand(deckOfCards.get(0));
             deckOfCards.remove(0);
         }

@@ -1,11 +1,8 @@
 package sk.stuba.fei.uim.oop.browncards;
 
-
 import sk.stuba.fei.uim.oop.Card;
 import sk.stuba.fei.uim.oop.Player;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Bang extends BrownCards {
     public Bang() {
@@ -17,11 +14,11 @@ public class Bang extends BrownCards {
         super.action(player, deckOfTrash, listOfPlayers, deckOfCards);
         boolean validInput = false;
         boolean hasVEDLE = false;
-        int temp = 0;
+        int temp ;
         while (!validInput) {
             System.out.println("||||||     Vyber si na koho chces vystrelit:     ||||||");
             for (int i = 0; i < listOfPlayers.size(); i++) {
-                if (!listOfPlayers.get(i).isDead() && player.getName() != listOfPlayers.get(i).getName())
+                if (!listOfPlayers.get(i).isDead() && player.getID() != listOfPlayers.get(i).getID())
                     System.out.println((i + 1) + "-" + listOfPlayers.get(i).getName());
             }
             String userInput = scanner.nextLine();
@@ -31,7 +28,7 @@ public class Bang extends BrownCards {
                 if (temp >= 0 && temp < listOfPlayers.size() && temp != player.getID() && !listOfPlayers.get(temp).isDead()) {
                     for (int i = 0; i < listOfPlayers.get(temp).getCardsOnHand().size(); i++) {
 
-                        if (Objects.equals(listOfPlayers.get(temp).getCardsOnHand().get(i).getName(), "VEDLE")) {
+                        if (listOfPlayers.get(temp).getCardsOnHand().get(i) instanceof Vedle) {
                             deckOfTrash.add(listOfPlayers.get(temp).getCardsOnHand().get(i));
                             listOfPlayers.get(temp).getCardsOnHand().remove(i);
                             player.removeCardFromHand(this);
