@@ -17,7 +17,6 @@ public class Game {
     private final ArrayList<Card> deckOfTrash = new ArrayList<>();
 
     Scanner scanner = new Scanner(System.in);
-    Scanner myObj = new Scanner(System.in);
 
     public Game() {
         createPlayers();
@@ -64,7 +63,7 @@ public class Game {
         for (int i = 0; i < 2; i++) {
             listOfBlueCards.add(new Vazenie());
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 13; i++) {
             listOfBlueCards.add(new Barel());
         }
         listOfBlueCards.add(new Dynamite());
@@ -80,7 +79,7 @@ public class Game {
         for (int i = 0; i < 8; i++) {
             listOfBrownCards.add(new Pivo());
         }
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 6; i++) {
             listOfBrownCards.add(new CatBalou());
         }
         for (int i = 0; i < 4; i++) {
@@ -109,34 +108,41 @@ public class Game {
 
     private void drawCards(Player player) {
         for (int i = 0; i < 2; i++) {
-            if (deckOfCards.isEmpty()) {
+            if (deckOfCards.isEmpty() && !deckOfTrash.isEmpty()) {
                 deckOfCards.addAll(deckOfTrash);
                 Collections.shuffle(deckOfCards);
             }
-
-            player.addCardToHand(deckOfCards.get(0));
-            deckOfCards.remove(0);
+            if(!deckOfCards.isEmpty()) {
+                player.addCardToHand(deckOfCards.get(0));
+                deckOfCards.remove(0);
+            }
+            else System.out.println("------              dosli karty             ------");
         }
     }
 
     private void playHand(Player player) {
+        player.setInPrison(false);
         int playedCard = 0;
         player.displayCardsOnBoard();
 
-        Card dynamite = player.hasDynamite();
+        BlueCards dynamite = player.hasDynamite();
         if (dynamite != null) {
-            dynamite.action(player, deckOfTrash, listOfPlayers, deckOfCards);
+            dynamite.isOnTable(player,deckOfTrash,listOfPlayers);
         }
 
         // prison check
+        BlueCards vazenie = player.hasVazenie();
+        if(vazenie != null){
+            vazenie.isOnTable(player,deckOfTrash,listOfPlayers);
+        }
 
         //playing card
-        while (playedCard != 420) {
+        while (playedCard != 420 && !player.isInPrison()) {
             boolean validInput = false;
             while (!validInput) {
                 player.displayCardsOnHand();
                 System.out.println("420: nezahraj nic");
-                System.out.println("||||||     Ktoru kartu chces zahrat ?            ||||||");
+                System.out.println("||||||        Ktoru kartu chces zahrat ?         ||||||");
                 String userInput = scanner.nextLine();
                 try {
                     playedCard = Integer.parseInt(userInput);
@@ -207,10 +213,8 @@ public class Game {
     }
 }
 
-// dynamit nemat 2x pred sebou opravit
-// vazenie dynamit a barel overit
-// vstup osetrit pre hrane karty
-// ak dojde deckOfCArds neh prehodi trashDeck do deckOfCards osetrit aj pre dostavnik
-// instance of overit ci pojde dopici
-// unused code
+// dynamit, barel, vazenie nemat 2x pred sebou opravit
+// vazenie dynamit
+// ked dojdu karty fix
+
 

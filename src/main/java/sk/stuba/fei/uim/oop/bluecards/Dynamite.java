@@ -13,11 +13,29 @@ public class Dynamite extends BlueCards {
 
     }
 
-    public void action(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers) {
+    public void action(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers, ArrayList<Card> deckOfCards) {
+        super.action(player, deckOfTrash, listOfPlayers, deckOfCards);
+        boolean alreadyHasDynamite=false;
+        for(int i =0; i<player.getCardsOnBoard().size(); i++){
+            if (player.getCardsOnBoard().get(i) instanceof Dynamite) {
+                alreadyHasDynamite = true;
+                break;
+            }
+        }
+        if(!alreadyHasDynamite) {
+            System.out.println("++++++         Dal si si pred seba dynamit         ++++++");
+            player.addCardToBoard(this);
+            player.removeCardFromHand(this);
+        }
+        else System.out.println("???????         Mas uz dynamit pred sebou          ??????");
+    }
+
+    public void isOnTable(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers){
 
         if (dynamitCheckBoom()) {
+            System.out.println("++++++             Dynamit ti vybuchol           ++++++");
             player.takeLife(3);
-            player.removeCardFromBoard(player.hasDynamite(), deckOfTrash);
+            player.removeCardFromBoard(this,deckOfTrash);
         } else {
             int temp = player.getID();
             int max = listOfPlayers.size();
@@ -28,17 +46,15 @@ public class Dynamite extends BlueCards {
                 if (!listOfPlayers.get(temp - 1).isDead()) {
                     listOfPlayers.get(temp - 1).addCardToBoard(this);
                     player.getCardsOnBoard().remove(this);
+                    System.out.println("++++++            Dynamit ti nevybuchol          ++++++");
                     break;
                 }
                 temp = temp - 1;
             }
-
         }
     }
-
     private boolean dynamitCheckBoom() {
-        if (random.nextInt(8) == 0) return true;
-        return false;
+        return random.nextInt(8) == 0;
     }
 }
 

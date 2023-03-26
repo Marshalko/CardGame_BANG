@@ -16,6 +16,9 @@ public class BlueCards extends Card {
     public void action(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers, ArrayList<Card> deckOfCards) {
 
     }
+    public void isOnTable(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayer){
+
+    }
 
 
 

@@ -14,7 +14,7 @@ public class Pivo extends BrownCards {
         super.action(player, deckOfTrash, listOfPlayers, deckOfCards);
         player.setLives((player.getLives()+1));
 
-        System.out.println("++++++     Dal si si pivecko a mas " + player.getLives() + " zivotov.    ++++++\n");
+        System.out.println("++++++     Dal si si pivecko a mas " + player.getLives() + " zivotov.    ++++++");
 
         player.removeCardFromHand(this);
         deckOfTrash.add(this);

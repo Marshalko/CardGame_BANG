@@ -13,11 +13,22 @@ public class Barel extends BlueCards {
     @Override
     public void action(Player player, ArrayList<Card> deckOfTrash, ArrayList<Player> listOfPlayers, ArrayList<Card> deckOfCards) {
         super.action(player, deckOfTrash, listOfPlayers, deckOfCards);
-        player.addCardToBoard(this);
-        player.removeCardFromHand(this);
+        boolean alreadyHasBarel=false;
+        for(int i =0; i<player.getCardsOnBoard().size(); i++){
+            if (player.getCardsOnBoard().get(i) instanceof Barel) {
+                alreadyHasBarel = true;
+                break;
+            }
+        }
+        if(!alreadyHasBarel) {
+            System.out.println("++++++         Dal si si pred seba barel         ++++++");
+            player.addCardToBoard(this);
+            player.removeCardFromHand(this);
+        }
+        else System.out.println("???????         Mas uz barel pred sebou          ??????");
     }
+
     public boolean barelCheck(){
-        if( random.nextInt(4)==0) return true ;
-         return  false;
+        return random.nextInt(4) == 0;
     }
 }

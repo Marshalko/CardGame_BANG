@@ -1,19 +1,29 @@
 package sk.stuba.fei.uim.oop;
 
+import sk.stuba.fei.uim.oop.bluecards.Barel;
 import sk.stuba.fei.uim.oop.bluecards.BlueCards;
 import sk.stuba.fei.uim.oop.bluecards.Dynamite;
+import sk.stuba.fei.uim.oop.bluecards.Vazenie;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Player {
-    private String name;
-    private int ID;
+    private final String name;
+    private final int ID;
     private int lives;
     private boolean isDead;
-    private ArrayList<Card> cardsOnHand = new ArrayList<>();
-    private ArrayList<BlueCards> cardsOnBoard = new ArrayList<>();
+    private boolean isInPrison;
+    private final ArrayList<Card> cardsOnHand = new ArrayList<>();
+    private final ArrayList<BlueCards> cardsOnBoard = new ArrayList<>();
 
+
+    public boolean isInPrison() {
+        return isInPrison;
+    }
+
+    public void setInPrison(boolean inPrison) {
+        isInPrison = inPrison;
+    }
 
     public String getName() {
         return name;
@@ -35,26 +45,13 @@ public class Player {
         return isDead;
     }
 
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
-
     public ArrayList<Card> getCardsOnHand() {
         return cardsOnHand;
-    }
-
-    public void setCardsOnHand(ArrayList<Card> cardsOnHand) {
-        this.cardsOnHand = cardsOnHand;
     }
 
     public ArrayList<BlueCards> getCardsOnBoard() {
         return cardsOnBoard;
     }
-
-    public void setCardsOnBoard(ArrayList<BlueCards> cardsOnBoard) {
-        this.cardsOnBoard = cardsOnBoard;
-    }
-
 
     public void addCardToHand(Card card) {
         this.cardsOnHand.add(card);
@@ -97,13 +94,30 @@ public class Player {
     }
 
     public BlueCards hasDynamite() {
-        boolean hasDynamite = false;
         for (int i = 0; i < this.getCardsOnBoard().size(); i++) {
             if (this.getCardsOnBoard().get(i) instanceof Dynamite)
                 return this.getCardsOnBoard().get(i);
         }
         return null;
     }
+
+
+    public BlueCards hasVazenie() {
+        for (int i = 0; i < this.getCardsOnBoard().size(); i++) {
+            if (this.getCardsOnBoard().get(i) instanceof Vazenie)
+                return this.getCardsOnBoard().get(i);
+        }
+        return null;
+    }
+
+    public BlueCards hasBarel() {
+        for (int i = 0; i < this.getCardsOnBoard().size(); i++) {
+            if (this.getCardsOnBoard().get(i) instanceof Barel)
+                return this.getCardsOnBoard().get(i);
+        }
+        return null;
+    }
+
 
     public void takeLife(int count) {
         this.lives -= count;
