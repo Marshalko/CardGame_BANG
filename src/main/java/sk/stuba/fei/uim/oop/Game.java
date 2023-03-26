@@ -28,7 +28,7 @@ public class Game {
     }
 
     private void createPlayers() {
-        System.out.println("========GAME IS ABOUT TO BEGIN=========");
+        System.out.println("========          HRA ZACINA        =========");
 
         int numberOfPlayers = 0;
         boolean validInput = false;
@@ -60,13 +60,14 @@ public class Game {
     }
 
     private void createBlueCards() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 12; i++) {
             listOfBlueCards.add(new Vazenie());
         }
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 2; i++) {
             listOfBlueCards.add(new Barel());
         }
-        listOfBlueCards.add(new Dynamite());
+        for (int i = 0; i < 20; i++)
+            listOfBlueCards.add(new Dynamite());
     }
 
     private void createBrownCards() {
@@ -112,11 +113,10 @@ public class Game {
                 deckOfCards.addAll(deckOfTrash);
                 Collections.shuffle(deckOfCards);
             }
-            if(!deckOfCards.isEmpty()) {
+            if (!deckOfCards.isEmpty()) {
                 player.addCardToHand(deckOfCards.get(0));
                 deckOfCards.remove(0);
-            }
-            else System.out.println("------              dosli karty             ------");
+            } else System.out.println("------              dosli karty             ------");
         }
     }
 
@@ -127,17 +127,17 @@ public class Game {
 
         BlueCards dynamite = player.hasDynamite();
         if (dynamite != null) {
-            dynamite.isOnTable(player,deckOfTrash,listOfPlayers);
+            dynamite.isOnTable(player, deckOfTrash, listOfPlayers);
         }
 
         // prison check
         BlueCards vazenie = player.hasVazenie();
-        if(vazenie != null){
-            vazenie.isOnTable(player,deckOfTrash,listOfPlayers);
+        if (vazenie != null) {
+            vazenie.isOnTable(player, deckOfTrash, listOfPlayers);
         }
 
         //playing card
-        while (playedCard != 420 && !player.isInPrison()) {
+        while (playedCard != 420 && player.isInPrison()) {
             boolean validInput = false;
             while (!validInput) {
                 player.displayCardsOnHand();
@@ -154,13 +154,13 @@ public class Game {
                     else if (playedCard > player.getCardsOnHand().size() || playedCard <= 0)
                         System.out.println("???????         Zadaj cislo karty more...        ??????");
                 } catch (NumberFormatException e) {
-                    System.out.println("???????         Zadaj cislo karty more7...        ??????");
+                    System.out.println("???????         Zadaj cislo karty more...        ??????");
                 }
                 System.out.println(" ");
             }
         }
         //removing excessive cards
-        while (player.getCardsOnHand().size() > player.getLives()) {
+        while (player.getCardsOnHand().size() > player.getLives() && player.isInPrison()) {
             boolean validInput = false;
             while (!validInput) {
                 System.out.println("------      Mas viac kariet ako zivotou.         ------");

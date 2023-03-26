@@ -57,10 +57,12 @@ public class Vazenie extends BlueCards {
         super.isOnTable(player, deckOfTrash, listOfPlayer);
 
         if (random.nextInt(4) == 0) {
+            System.out.println("-----              Vyhol si sa vazeniu            -----");
             player.setInPrison(false);
             deckOfTrash.add(this);
             player.getCardsOnBoard().remove(this);
         } else {player.setInPrison(true);
+            System.out.println("------              ostal si v base              ------");
                 player.removeCardFromBoard(this,deckOfTrash);
         }
     }

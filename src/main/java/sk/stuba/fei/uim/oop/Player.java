@@ -18,7 +18,7 @@ public class Player {
 
 
     public boolean isInPrison() {
-        return isInPrison;
+        return !isInPrison;
     }
 
     public void setInPrison(boolean inPrison) {
@@ -121,7 +121,7 @@ public class Player {
 
     public void takeLife(int count) {
         this.lives -= count;
-        System.out.println("++++++  " + this.getName() + "stratil zivot a ma uz len " + this.getLives() + " zivotov      ++++++\n");
+        System.out.println("++++++  " + this.getName() + "stratil zivot a ma uz len " + this.getLives() + " zivotov      ++++++");
         if (this.lives < 1) {
             this.isDead = true;
             System.out.println("XXXXXX       A preto " + this.getName() + " zomrel                  XXXXXX");
